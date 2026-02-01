@@ -26,39 +26,39 @@ public class MainPage implements MainPageConstants {
     //Элемент раздела главной страницы «Вопросы о важном»
     private final By mainPageFAQ = By.xpath("//div[contains(text(), 'Вопросы о важном')]");
 
-    // Вопрос 1
-    private By question1 = By.xpath(".//div[@class='accordion__item'][1]");
-    // Вопрос 2
-    private By question2 = By.xpath(".//div[@class='accordion__item'][2]");
-    // Вопрос 3
-    private By question3 = By.xpath(".//div[@class='accordion__item'][3]");
-    // Вопрос 4
-    private By question4 = By.xpath(".//div[@class='accordion__item'][4]");
-    // Вопрос 5
-    private By question5 = By.xpath(".//div[@class='accordion__item'][5]");
-    // Вопрос 6
-    private By question6 = By.xpath(".//div[@class='accordion__item'][6]");
-    // Вопрос 7
-    private By question7 = By.xpath(".//div[@class='accordion__item'][7]");
-    // Вопрос 8
-    private By question8 = By.xpath(".//div[@class='accordion__item'][8]");
+    // Вопрос 1 "Сколько это стоит? И как оплатить?"
+    public static By paymentAndCostsQuestion = By.xpath(".//div[@class='accordion__item'][1]");
+    // Вопрос 2 "Хочу сразу несколько самокатов! Так можно?"
+    public static By multipleScootersQuestion = By.xpath(".//div[@class='accordion__item'][2]");
+    // Вопрос 3 "Как рассчитывается время аренды?"
+    public static By rentalTimeCalculationQuestion = By.xpath(".//div[@class='accordion__item'][3]");
+    // Вопрос 4 "Можно ли заказать самокат прямо на сегодня?"
+    public static By orderTodayQuestion = By.xpath(".//div[@class='accordion__item'][4]");
+    // Вопрос 5 "Можно ли продлить заказ или вернуть самокат раньше?"
+    public static By extendOrReturnEarlyQuestion = By.xpath(".//div[@class='accordion__item'][5]");
+    // Вопрос 6 "Вы привозите зарядку вместе с самокатом?"
+    public static By chargingEquipmentQuestion = By.xpath(".//div[@class='accordion__item'][6]");
+    // Вопрос 7 "Можно ли отменить заказ?"
+    public static By cancellationPolicyQuestion = By.xpath(".//div[@class='accordion__item'][7]");
+    // Вопрос 8 "Я живу за МКАДом, привезёте?"
+    public static By deliveryOutsideMKADQuestion = By.xpath(".//div[@class='accordion__item'][8]");
 
-    // Ответ на вопрос 1
-    private By answer1 = By.id("accordion__panel-0");
-    // Ответ на вопрос 2
-    private By answer2 = By.id("accordion__panel-1");
-    // Ответ на вопрос 3
-    private By answer3 = By.id("accordion__panel-2");
-    // Ответ на вопрос 4
-    private By answer4 = By.id("accordion__panel-3");
-    // Ответ на вопрос 5
-    private By answer5 = By.id("accordion__panel-4");
-    // Ответ на вопрос 6
-    private By answer6 = By.id("accordion__panel-5");
-    // Ответ на вопрос 7
-    private By answer7 = By.id("accordion__panel-6");
-    // Ответ на вопрос 8
-    private By answer8 = By.id("accordion__panel-7");
+    // Ответ на вопрос 1 "Сколько это стоит? И как оплатить?"
+    public static By paymentAndCostsAnswer = By.id("accordion__panel-0");
+    // Ответ на вопрос 2 "Хочу сразу несколько самокатов! Так можно?"
+    public static By multipleScootersAnswer = By.id("accordion__panel-1");
+    // Ответ на вопрос 3 "Как рассчитывается время аренды?"
+    public static By rentalTimeCalculationAnswer = By.id("accordion__panel-2");
+    // Ответ на вопрос 4 "Можно ли заказать самокат прямо на сегодня?"
+    public static By orderTodayAnswer = By.id("accordion__panel-3");
+    // Ответ на вопрос 5 "Можно ли продлить заказ или вернуть самокат раньше?"
+    public static By extendOrReturnEarlyAnswer = By.id("accordion__panel-4");
+    // Ответ на вопрос 6 "Вы привозите зарядку вместе с самокатом?"
+    public static By chargingEquipmentAnswer = By.id("accordion__panel-5");
+    // Ответ на вопрос 7 "Можно ли отменить заказ?"
+    public static By cancellationPolicyAnswer = By.id("accordion__panel-6");
+    // Ответ на вопрос 8 "Я живу за МКАДом, привезёте?"
+    public static By deliveryOutsideMKADAnswer = By.id("accordion__panel-7");
 
 
     //Прочие элементы главной страницы
@@ -119,7 +119,8 @@ public class MainPage implements MainPageConstants {
     //Методы получения ответа
     public String getAnswerText(int questionNumber) {
         String answerId = "accordion__panel-" + (questionNumber - 1);
-        WebElement answer = driver.findElement(By.id(answerId));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(answerId)));
         return answer.getText();
     }
 }

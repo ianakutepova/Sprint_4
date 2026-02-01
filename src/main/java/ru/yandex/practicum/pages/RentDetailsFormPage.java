@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class RentDetailsFormPage {
 
-        private WebDriver driver;
+    private WebDriver driver;
 
 
     //Поле для ввода даты доставки самоката
@@ -19,8 +19,7 @@ public class RentDetailsFormPage {
     //Выпадающий список для выбора срока аренды
     private final By aboutOrderHeader = By.xpath(".//div[text()='Про аренду']");
     private final By rentalPeriodField = By.xpath(".//div[@class='Dropdown-placeholder']");
-//    //Выпадающий список для выбора срока аренды
-//    private final By rentalPeriodDropdownList = By.xpath(".//div[@class='Dropdown-control']");
+
     //Поле с вариантами выбора цвета самоката
     private final By scooterColorField = By.xpath(".//div[@class='Order_Checkboxes__3lWSI']");
     //Поле для ввода комментария курьеру
