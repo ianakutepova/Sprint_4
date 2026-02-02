@@ -1,7 +1,6 @@
 package ru.yandex.practicum.tests;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,36 +17,17 @@ import ru.yandex.practicum.utils.DataGenerator;
 @RunWith(Parameterized.class)
 public class ScooterOrderTest extends BaseTest {
 
-    private final String name;
-    private final String surname;
-    private final String address;
-    private final String metroStation;
-    private final String phoneNumber;
-    private final String date;
-    private final String days;
-    private final String color;
-    private final String comment;
-    private final boolean isUpperButton; // Параметр для указания кнопки
+    private final boolean isUpperButton;
 
-    public ScooterOrderTest(String name, String surname, String address, String metroStation, String phoneNumber, String date, String days, String color, String comment, boolean isUpperButton) {
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.metroStation = metroStation;
-        this.phoneNumber = phoneNumber;
-        this.date = date;
-        this.days = days;
-        this.color = color;
-        this.comment = comment;
+    public ScooterOrderTest(boolean isUpperButton) {
         this.isUpperButton = isUpperButton;
     }
 
     @Parameterized.Parameters
     public static Object[][] provideTestData() {
-        DataGenerator dataGenerator = new DataGenerator();
         return new Object[][]{
-                {dataGenerator.generateName(), dataGenerator.generateSurname(), dataGenerator.generateAddress(), dataGenerator.generateMetroStation(), dataGenerator.generatePhoneNumber(), dataGenerator.generateDate(), dataGenerator.generateDays(), dataGenerator.generateColor(), dataGenerator.generateComment(), true},
-                {dataGenerator.generateName(), dataGenerator.generateSurname(), dataGenerator.generateAddress(), dataGenerator.generateMetroStation(), dataGenerator.generatePhoneNumber(), dataGenerator.generateDate(), dataGenerator.generateDays(), dataGenerator.generateColor(), dataGenerator.generateComment(), false}
+                {true},
+                {false}
         };
     }
 
@@ -67,6 +47,18 @@ public class ScooterOrderTest extends BaseTest {
             mainPage.clickLowerOrderButton();
         }
 
+        DataGenerator dataGenerator = new DataGenerator();
+
+        String name = dataGenerator.generateName();
+        String surname = dataGenerator.generateSurname();
+        String address = dataGenerator.generateAddress();
+        String metroStation = dataGenerator.generateMetroStation();
+        String phoneNumber = dataGenerator.generatePhoneNumber();
+        String date = dataGenerator.generateDate();
+        String days = dataGenerator.generateDays();
+        String color = dataGenerator.generateColor();
+        String comment = dataGenerator.generateComment();
+
         OrderFormPage orderFormPage = new OrderFormPage(driver);
         orderFormPage.setOrderFormCompletely(name, surname, address, metroStation, phoneNumber);
         orderFormPage.clickFurtherButton();
@@ -83,12 +75,11 @@ public class ScooterOrderTest extends BaseTest {
 
 
     public void checkSuccessfullyIssuedOrderWindow() {
-    By orderIssuedModalWindow = By.xpath(".//div[contains(text(), 'Заказ оформлен')]");
+        ConfirmModalWindowPage confirmModalWindowPage = new ConfirmModalWindowPage(driver);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(confirmModalWindowPage.orderIssuedModalWindow));
 
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(orderIssuedModalWindow));
-
-        WebElement expectedElement = driver.findElement(orderIssuedModalWindow);
+        WebElement expectedElement = driver.findElement(confirmModalWindowPage.orderIssuedModalWindow);
         assertTrue("Всплывающее окно с сообщением об успешном создании заказа не отображается", expectedElement.isDisplayed());
         }
     }

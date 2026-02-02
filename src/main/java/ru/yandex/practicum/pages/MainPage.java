@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class MainPage implements MainPageConstants {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     //Элементы главной страницы, задействованные в тестах
     // Кнопка "Заказать" вверху страницы
@@ -63,15 +63,15 @@ public class MainPage implements MainPageConstants {
 
     //Прочие элементы главной страницы
     // Логотип "Яндекс"
-    private final By yandexLogo = By.xpath("//img[@alt='Yandex']");
+    //private final By yandexLogo = By.xpath("//img[@alt='Yandex']");
     // Логотип Самокат
-    private final By scooterLogo = By.xpath("//img[@alt='Scooter']");
+    //private final By scooterLogo = By.xpath("//img[@alt='Scooter']");
     // кнопка "Статус заказа"
-    private final By statusOrderButton = By.xpath("//button[text()='Статус заказа']");
+    //private final By statusOrderButton = By.xpath("//button[text()='Статус заказа']");
     // поле для ввода номера заказа
-    private final By orderNumberField = By.xpath("//input[@placeholder = 'Введите номер заказа']");
+    //private final By orderNumberField = By.xpath("//input[@placeholder = 'Введите номер заказа']");
     // кнопка "GO" для начала поиска заказа
-    private final By goButton = By.xpath("//button[text()='Go!']");
+    //private final By goButton = By.xpath("//button[text()='Go!']");
 
 
     public MainPage(WebDriver driver) {
@@ -111,16 +111,15 @@ public class MainPage implements MainPageConstants {
     }
 
     // Методы для раскрытия вопросов
-    public void clickQuestion(int questionNumber) {
-        WebElement question = driver.findElement(By.xpath(".//div[@class='accordion__item'][" + questionNumber + "]"));
+    public void clickQuestion(By questionLocator) {
+        WebElement question = driver.findElement(questionLocator);
         question.click();
     }
 
     //Методы получения ответа
-    public String getAnswerText(int questionNumber) {
-        String answerId = "accordion__panel-" + (questionNumber - 1);
+    public String getAnswerText(By answerLocator) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(answerId)));
+        WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
         return answer.getText();
     }
 }

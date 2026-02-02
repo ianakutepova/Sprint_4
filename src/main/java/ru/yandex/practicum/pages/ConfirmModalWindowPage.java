@@ -11,13 +11,13 @@ public class ConfirmModalWindowPage {
     private final WebDriver driver;
 
     //Модальное окно с запросом подтверждения оформления заказа
-    private final By orderConfirmQuestionBox = By.xpath(".//div[@class='Order_Modal__YZ-d3' and contains(text(), 'Хотите оформить заказ?')]");
+    public final By orderConfirmQuestionBox = By.xpath(".//div[@class='Order_Modal__YZ-d3' and contains(text(), 'Хотите оформить заказ?')]");
 
     //Кнопка "Да" в модальном окне подтверждения заказа
-    private final By yesButton = By.xpath(".//button[contains(text(), 'Да')]");
+    public final By yesButton = By.xpath(".//button[contains(text(), 'Да')]");
 
     //Модальное окно оформленного заказа
-    private final By orderIssuedModalWindow = By.xpath(".//div[contains(text(), 'Заказ оформлен')]");
+    public final By orderIssuedModalWindow = By.xpath(".//div[contains(text(), 'Заказ оформлен')]");
 
 
     public ConfirmModalWindowPage(WebDriver driver) {
@@ -25,11 +25,11 @@ public class ConfirmModalWindowPage {
     }
 
     //Метод проверки доступности и нажатия на кнопку "Да" в окне подтверждения заказа
-    public ConfirmModalWindowPage clickYesButton() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(yesButton));
+    public void clickYesButton() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(orderConfirmQuestionBox));
         driver.findElement(yesButton).click();
-        return this;
+
     }
 
 
